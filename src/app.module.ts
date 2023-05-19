@@ -1,16 +1,15 @@
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_PIPE, RouterModule } from '@nestjs/core';
-import { ServeStaticModule } from '@nestjs/serve-static';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
 
 import { BaseModule } from './base';
 import { CommonModule, ExceptionsFilter } from './common';
 import { configuration, loggerOptions } from './config';
-import { SampleModule as DebugSampleModule } from './debug';
-import { GqlModule } from './gql';
-import { SampleModule } from './sample';
+import { GraphqlSampleModule } from './graphql-sample/graphql-sample.module';
 
 @Module({
   imports: [
@@ -31,28 +30,16 @@ import { SampleModule } from './sample';
       }),
       inject: [ConfigService],
     }),
-    // Static Folder
-    // https://docs.nestjs.com/recipes/serve-static
-    // https://docs.nestjs.com/techniques/mvc
-    ServeStaticModule.forRoot({
-      rootPath: `${__dirname}/../public`,
-      renderPath: '/',
+    GraphQLModule.forRootAsync({
+      driver: ApolloDriver,
+      useFactory: (config: ConfigService) => ({
+        ...config.get<GqlModuleOptions>('graphql'),
+      }),
+      inject: [ConfigService],
     }),
     // Service Modules
     CommonModule, // Global
-    BaseModule,
-    SampleModule,
-    GqlModule,
-    DebugSampleModule,
-    // Module Router
-    // https://docs.nestjs.com/recipes/router-module
-    RouterModule.register([{
-      path: 'test',
-      module: SampleModule,
-    }, {
-      path: 'test',
-      module: DebugSampleModule,
-    }]),
+    BaseModule, GraphqlSampleModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers

@@ -17,7 +17,8 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "ignorePatterns": ["**/node_modules/**", "dist/**", "src/entity/**"],
-  "rules": { // These rules are for reference only.
+  "rules": {
+    // These rules are for reference only.
     "class-methods-use-this": "off",
     // https://github.com/typescript-eslint/typescript-eslint/issues/1277
     "consistent-return": "off",
@@ -44,22 +45,31 @@
     "no-return-await": "off",
     "no-unused-expressions": "off",
     "object-curly-spacing": "off",
+    "@typescript-eslint/indent": ["error", 2, { "ignoredNodes": ["PropertyDefinition"] }],
 
     "import/extensions": ["error", "never"],
     // https://github.com/benmosher/eslint-plugin-import/issues/1753
     "import/named": "off",
     "import/no-default-export": "error",
-    "import/order": ["error", { "groups": [["builtin", "external", "internal"]], "newlines-between": "always", "alphabetize": { "order": "asc", "caseInsensitive": true } }],
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external", "internal"]],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
     "import/prefer-default-export": "off",
 
     "@typescript-eslint/consistent-indexed-object-style": "error",
     "@typescript-eslint/consistent-type-assertions": ["error", { "assertionStyle": "angle-bracket" }],
-    "@typescript-eslint/explicit-function-return-type": "error",
-    "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "constructors": "no-public" } }],
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    // "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "constructors": "no-public" } }],
     "@typescript-eslint/lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "@typescript-eslint/member-delimiter-style": "error",
     "@typescript-eslint/member-ordering": "error",
-    "@typescript-eslint/naming-convention": ["error",
+    "@typescript-eslint/naming-convention": [
+      "error",
       { "selector": "default", "format": ["strictCamelCase"] },
       { "selector": "variable", "format": ["strictCamelCase", "UPPER_CASE", "StrictPascalCase"] },
       // https://github.com/microsoft/TypeScript/issues/9458

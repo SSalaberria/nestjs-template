@@ -6,8 +6,6 @@
   "scripts": {
     "lint": "eslint --ext .ts .",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "entity:load": "ts-node bin/entity",
-    "entity:sync": "typeorm-ts-node-commonjs -d bin/ormconfig.ts schema:sync",
     "build": "nest build",
     "prestart": "npm run lint && npm run build",
     "start": "node dist/app",
@@ -59,6 +57,8 @@
     "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^9.3.0",
     "@nestjs/testing": "^9.3.12",
+    "@types/babel__core": "^7.20.0",
+    "@types/babel__traverse": "^7.18.5",
     "@types/compression": "^1.7.2",
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.17.7",

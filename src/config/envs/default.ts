@@ -17,7 +17,6 @@ export const config = {
     // sortSchema: true,
     // installSubscriptionHandlers: true,
   },
-  hello: 'world',
   jwtSecret: process.env.JWT_SECRET,
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
 };

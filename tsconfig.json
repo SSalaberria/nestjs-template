@@ -4,7 +4,7 @@
     "paths": {
       // https://docs.nestjs.com/cli/scripts#build
       // https://nodejs.org/api/packages.html#imports
-      "#entity/*": ["./src/entity/*"],
+      "#entity/*": ["./src/entity/*"]
     },
     "target": "ES2019",
     "outDir": "dist",
@@ -18,6 +18,7 @@
     "allowUnusedLabels": false,
     // "exactOptionalPropertyTypes": true,
     "importsNotUsedAsValues": "error",
+    "ignoreDeprecations": "5.0",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
