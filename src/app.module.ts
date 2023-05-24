@@ -3,13 +3,13 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { LoggerModule } from 'nestjs-pino';
 
 import { BaseModule } from './base';
 import { CommonModule, ExceptionsFilter } from './common';
 import { configuration, loggerOptions } from './config';
-import { GraphqlSampleModule } from './graphql-sample/graphql-sample.module';
+import { UserModule } from './shared/user';
 
 @Module({
   imports: [
@@ -24,9 +24,10 @@ import { GraphqlSampleModule } from './graphql-sample/graphql-sample.module';
     }),
     // Database
     // https://docs.nestjs.com/techniques/database
-    TypeOrmModule.forRootAsync({
-      useFactory: (config: ConfigService) => ({
-        ...config.get<TypeOrmModuleOptions>('db'),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        ...configService.get<MongooseModuleOptions>('db'),
       }),
       inject: [ConfigService],
     }),
@@ -39,7 +40,8 @@ import { GraphqlSampleModule } from './graphql-sample/graphql-sample.module';
     }),
     // Service Modules
     CommonModule, // Global
-    BaseModule, GraphqlSampleModule,
+    BaseModule,
+    UserModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers
@@ -55,6 +57,7 @@ import { GraphqlSampleModule } from './graphql-sample/graphql-sample.module';
         // disableErrorMessages: true,
         transform: true, // transform object to DTO class
         whitelist: true,
+        transformOptions: { enableImplicitConversion: true },
       }),
     },
   ],

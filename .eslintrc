@@ -45,7 +45,7 @@
     "no-return-await": "off",
     "no-unused-expressions": "off",
     "object-curly-spacing": "off",
-    "@typescript-eslint/indent": ["error", 2, { "ignoredNodes": ["PropertyDefinition"] }],
+    "@typescript-eslint/indent": ["error", 2, { "ignoredNodes": ["PropertyDefinition", "FunctionExpression"] }],
 
     "import/extensions": ["error", "never"],
     // https://github.com/benmosher/eslint-plugin-import/issues/1753
@@ -62,7 +62,7 @@
     "import/prefer-default-export": "off",
 
     "@typescript-eslint/consistent-indexed-object-style": "error",
-    "@typescript-eslint/consistent-type-assertions": ["error", { "assertionStyle": "angle-bracket" }],
+    "@typescript-eslint/consistent-type-assertions": ["error", { "assertionStyle": "as" }],
     "@typescript-eslint/explicit-function-return-type": "warn",
     // "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "constructors": "no-public" } }],
     "@typescript-eslint/lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
@@ -93,6 +93,8 @@
     "@typescript-eslint/no-unnecessary-type-constraint": "error",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/object-curly-spacing": ["error", "always"],
     "@typescript-eslint/prefer-includes": "off",

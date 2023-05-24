@@ -1,3 +1,4 @@
-export * from './user.interface';
+export * from './entities';
 export * from './user.module';
 export * from './user.service';
+export * from './dto';

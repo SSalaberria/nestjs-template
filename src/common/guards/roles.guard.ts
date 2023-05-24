@@ -20,7 +20,7 @@ export class RolesGuard implements CanActivate {
     let request: Request;
     if (context.getType<GqlContextType>() === 'graphql') {
       const ctx = GqlExecutionContext.create(context).getContext();
-      request = <Request>ctx.req;
+      request = ctx.req as Request;
     } else {
       request = context.switchToHttp().getRequest<Request>();
     }

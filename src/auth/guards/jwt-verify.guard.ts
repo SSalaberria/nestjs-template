@@ -8,7 +8,7 @@ export class JwtVerifyGuard extends AuthGuard('jwt-verify') {
   public getRequest(context: ExecutionContext): Request {
     if (context.getType<GqlContextType>() === 'graphql') {
       const ctx = GqlExecutionContext.create(context).getContext();
-      return <Request>ctx.req;
+      return ctx.req as Request;
     }
 
     return context.switchToHttp().getRequest<Request>();
