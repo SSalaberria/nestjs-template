@@ -4,6 +4,7 @@ import type { Model } from 'mongoose';
 import { AuthService } from 'src/auth';
 
 import type { CreateUserInput } from './dto/create-user.input';
+import type { GetUsersInput } from './dto/get-users.input';
 import type { UpdateUserInput } from './dto/update-user.input';
 import { User, UserDocument } from './entities/user.entity';
 import { UserNotFoundException } from './exceptions';
@@ -35,8 +36,15 @@ export class UserService {
     return user;
   }
 
-  public async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  public async findAll(paginationQuery: GetUsersInput): Promise<User[]> {
+    const { limit, offset } = paginationQuery;
+    return this.userModel.find().skip(offset).limit(limit).exec();
+  }
+
+  public async getUsers(paginationQuery: GetUsersInput): Promise<{ users: User[]; count: number }> {
+    const [users, count] = await Promise.all([this.findAll(paginationQuery), this.userModel.countDocuments()]);
+
+    return { users, count };
   }
 
   public async update(userId: string, updateUserInput: UpdateUserInput): Promise<User> {
