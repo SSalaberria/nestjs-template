@@ -8,6 +8,7 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   public canActivate(context: ExecutionContext): boolean {
+    // Get the defined roles from the Roles decorator
     const roles = this.reflector.getAllAndOverride<string[] | undefined>('roles', [
       context.getHandler(), // Method Roles
       context.getClass(), // Controller Roles
@@ -26,6 +27,7 @@ export class RolesGuard implements CanActivate {
     }
 
     const { user } = request;
+
     if (!user) {
       return false;
     }

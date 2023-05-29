@@ -2,10 +2,11 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { connectionFromArraySlice } from 'graphql-relay';
 import { JwtAuthGuard, Payload } from 'src/auth';
-import { ConnectionArgs, ReqUser, getPagingParameters } from 'src/common';
+import { ConnectionArgs, ReqUser, Roles, RolesGuard, getPagingParameters } from 'src/common';
 
 import { CreateUserInput, UpdateUserInput, UsersResponse } from './dto';
 import { User } from './entities';
+import { Role } from './user.interface';
 import { UserService } from './user.service';
 
 @Resolver(() => User)
@@ -24,11 +25,15 @@ export class UserResolver {
   }
 
   @Query(() => User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   async findById(@Args('_id', { type: () => String }) id: string): Promise<User> {
     return this.users.findOneById(id);
   }
 
   @Query(() => UsersResponse)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   async findAll(@Args('args', { type: () => ConnectionArgs }) args: ConnectionArgs): Promise<UsersResponse> {
     const { limit, offset } = getPagingParameters(args);
     const { users, count } = await this.users.getUsers({ limit, offset });

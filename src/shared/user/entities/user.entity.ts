@@ -2,6 +2,8 @@ import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import type { HydratedDocument, ObjectId } from 'mongoose';
 
+import type { Role } from '../user.interface';
+
 export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true }) // DAO
@@ -24,7 +26,7 @@ export class User {
 
   @Prop({ required: false, default: [] })
   @Field(() => [String], { description: 'Roles' })
-  roles!: string[];
+  roles!: Role[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
